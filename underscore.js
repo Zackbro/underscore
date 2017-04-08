@@ -60,7 +60,6 @@
     if (_.isFunction(value)) return optimizeCb(value, context, argCount);
     if (_.isObject(value)) return _.matcher(value);
     return _.property(value);
-
   }
   
   var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
@@ -119,9 +118,26 @@
     return obj != null && hasOwnProperty.call(obj, key);
   }
 
-  // 返回传人的参数
+  // 返回传入的参数
   _.identity = function(value) {
     return value;
   }
+
+  // 判断是否是function
+  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+    _.isFunction = function(obj) {
+      return typeof obj = 'function' || false;
+    }; 
+  }
+
+  // 判断对象是否有键值对
+  _.matcher = _.matches = function(attrs) {
+    attrs = _extendOwn({}, attrs);
+    return function (obj) {
+      return _.isMatch(obj, attrs);
+    };
+  }
+
+  _.extendOwn = _.assign = createAssigner(_.keys);
 
 }.call(this))
